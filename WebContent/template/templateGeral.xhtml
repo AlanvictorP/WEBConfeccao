@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:insert name="metaData" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Confecção</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" header="Fabiana Confecção"
+			resizable="false" closable="false" collapsible="false">
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" header="Alanvictor™" resizable="false"
+			closable="false" collapsible="false">
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Menu"
+			resizable="false" closable="false" collapsible="false">
+
+			<h:form id="frmMenuPrincipal">
+				<p:panelMenu id="pnlMenuPrincipal">
+					<p:submenu label="Principal">
+						<p:menuitem value="Logar" outcome="/paginas/login.xhtml"
+							rendered="#{logarBean.funLogin.nome ==null}" />
+						<p:menuitem value="Sair" 
+							action="#{logarBean.sair}"
+							rendered="#{logarBean.funLogin.nome !=null}" />
+					</p:submenu>
+					
+					<p:submenu label="Relatorios"
+						rendered="#{logarBean.funLogin.nome !=null}">
+						<p:menuitem value="Relatorio Geral dos Clientes" outcome="/paginas/clientesRelatorio.xhtml" 
+						rendered="#{logarBean.funLogin.nome != null}"  />
+						<p:menuitem value="Relatorio E/S Estoque" />
+						<p:menuitem value="Relatorio de Movimentações Caixa" />
+					</p:submenu>
+					
+					<p:submenu label="Clientes"
+						rendered="#{logarBean.funLogin.nome != null}">
+						<p:menuitem value="Cadastrar"
+							outcome="/paginas/clientesCadastro.xhtml">
+							<f:param name="cliente_acao" value="novo" />
+						</p:menuitem>
+						<p:menuitem value="Pesquisar"
+							outcome="/paginas/clientesPesquisa.xhtml" />
+					</p:submenu>
+					
+					<p:submenu label="Cortes"
+						rendered="#{logarBean.funLogin.nome != null}">
+						<p:menuitem value="Cadastrar"
+							outcome="/paginas/cortesCadastro.xhtml">
+							<f:param name="corte_acao" value="novo" />
+						</p:menuitem>
+						<p:menuitem value="Pesquisar"
+							outcome="/paginas/cortesPesquisa.xhtml" />
+					</p:submenu>	
+					
+					<p:submenu label="Movimentação"
+						rendered="#{logarBean.funLogin.nome !=null}">
+						<p:menuitem value="Caixa" />
+					</p:submenu>
+					
+					<p:submenu label="Estoque" rendered="#{logarBean.funLogin.nome}">
+						<p:menuitem value="Cadastrar Material" />
+						<p:menuitem value="Entrada" />
+						<p:menuitem value="Saida" />
+						<p:menuitem value="Levantamento" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="center" resizable="false" closable="false"
+			collapsible="false">
+			<p:messages id="msgGlobal" closable="true" />
+			<ui:insert name="conteudo" />
+
+		</p:layoutUnit>
+	</p:layout>
+
+</h:body>
+</html>

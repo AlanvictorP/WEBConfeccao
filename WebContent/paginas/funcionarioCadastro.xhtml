@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template/templateGeral.xhtml">
+	<ui:define name="metaData">
+		<!-- MetaData para recuperar os param e realizar a pesquisa do cliente selecionado -->
+		<f:metadata>
+			<f:viewParam name="fun_cod" value="#{funcionarioBean.codigo}" />
+			<f:viewParam name="fun_acao" value="#{funcionarioBean.acao}" />
+			<f:event listener="#{funcionarioBean.carregarPesquisa}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmFunCadastro">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastro de Funcionarios" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="pnlFunCadastro" columns="2">
+				<p:outputLabel value="Nome:" />
+				<p:inputText maxlength="50" size="40" value="#{funcionarioBean.funcionarioCadastro.nome}" />
+				<p:outputLabel value="Função:" />
+				<p:selectOneMenu value="#{funcionarioBean.funcionarioCadastro.funcao}">
+					<f:selectItem itemLabel="Selecione uma função" itemValue="" />
+					<f:selectItem itemLabel="Administrador" itemValue="Administrador" />
+					<f:selectItem itemLabel="Costureiro(a)" itemValue="Costureiro(a)" />
+					<f:selectItem itemLabel="Auxiliar" itemValue="Auxiliar" />
+				</p:selectOneMenu>
+				<p:outputLabel value="CPF:" />
+				<p:inputMask mask="999.999.999-99" size="12"
+				value="#{funcionarioBean.funcionarioCadastro.cpf}" />
+				<p:outputLabel value="Senha:" />
+				<p:password size="8" maxlength="8"
+					value="#{funcionarioBean.funcionarioCadastro.senha}"
+					redisplay="true" />
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+
+				<p:commandButton value="Salvar"
+					actionListener="#{funcionarioBean.salvar}"
+					update=":msgGlobal :frmFunCadastro:pnlFunCadastro"
+					rendered="#{funcionarioBean.acao == 'novo'}" />
+					
+					<p:commandButton value="Excluir"
+					actionListener="#{funcionarioBean.excluir}" update=":msgGlobal"
+					rendered="#{funcionarioBean.acao == 'excluir'}" />
+
+				<p:commandButton value="Editar"
+					actionListener="#{funcionarioBean.editar}" update=":msgGlobal"
+					rendered="#{funcionarioBean.acao == 'editar'}" />
+
+				<p:commandButton value="Limpar" actionListener="#{corteBean.limpar}"
+					update=":frmFunCadastro:pnlFunCadastro"
+					rendered="#{funcionarioBean.acao == 'novo'}" />
+
+				<p:button value="Pesquisar" outcome="/paginas/funcionarioPesquisa.xhtml" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

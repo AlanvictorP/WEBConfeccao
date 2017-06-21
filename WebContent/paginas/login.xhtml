@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body id="body" style="background-image:url('imgfundo.png');">
+		<p:messages id="msgGlobal" closable="true" />
+        	<h:panelGrid id="panel">
+
+            	<p:dialog header="Login" id="loginDialog" minWidth="400"
+                      width="400" modal="true" closable="false" position="center"
+                      showEffect="slide" draggable="true" resizable="false" visible="true">
+           			<h:form id="frmLogin">
+           			
+						<h:panelGrid columns="2" id="pnlLogin">
+							<p:outputLabel value="Nome:" />
+								<p:inputText maxlength="20" size="20"
+											value="#{logarBean.funLogin.nome}" />
+
+							<p:outputLabel value="Senha:" />
+								<p:password size="20" maxlength="8"
+											value="#{logarBean.funLogin.senha}" />
+						
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton update=":msgGlobal "
+											action="#{logarBean.logar}" value="Entrar"
+											icon="ui-icon-unlocked" />
+											
+							<p:commandButton update=":frmLogin:pnlLogin"
+											actionListener="#{logarBean.limpar}"
+											value="Limpar" 
+											icon="ui-icon-clipboard"/>
+						</h:panelGrid>
+					</h:form>
+           
+           	 </p:dialog>
+            
+            
+        </h:panelGrid>
+    </h:body>
+</html>

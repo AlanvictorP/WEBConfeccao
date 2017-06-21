@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template/templateGeral.xhtml">
+	<ui:define name="metaData">
+		<!-- MetaData para recuperar os param e realizar a pesquisa do cliente selecionado -->
+		<f:metadata>
+			<f:viewParam name="cliente_cod" value="#{clienteBean.codigo}" />
+			<f:viewParam name="cliente_acao" value="#{clienteBean.acao}" />
+			<f:event listener="#{clienteBean.carregarPesquisa}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmCadastroCliente">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastro de Clientes" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="pnlCadastroCliente" columns="2">
+
+				<p:outputLabel value="Nome:" />
+				<p:inputText maxlength="50" size="40"
+					value="#{clienteBean.clienteCadastro.nome}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="Telefone:" />
+				<p:inputText maxlength="11" size="15"
+					value="#{clienteBean.clienteCadastro.telefone}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="Endereço:" />
+				<p:inputText maxlength="100" size="40"
+					value="#{clienteBean.clienteCadastro.endereco}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="E-mail:" />
+				<p:inputText maxlength="100" size="40"
+					value="#{clienteBean.clienteCadastro.email}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+			</h:panelGrid>
+			<h:panelGrid columns="5">
+				<p:commandButton value="Salvar"
+					actionListener="#{clienteBean.salvar}"
+					update=":msgGlobal :frmCadastroCliente:pnlCadastroCliente"
+					rendered="#{clienteBean.acao == 'novo'}" />
+
+				<p:commandButton value="Limpar"
+					actionListener="#{clienteBean.limpar}"
+					update=":frmCadastroCliente:pnlCadastroCliente"
+					rendered="#{clienteBean.acao == 'novo'}" />
+
+				<p:commandButton value="Excluir"
+					actionListener="#{clienteBean.excluir}" update=":msgGlobal"
+					rendered="#{clienteBean.acao == 'excluir'}" />
+
+				<p:commandButton value="Editar"
+					actionListener="#{clienteBean.editar}" update=":msgGlobal"
+					rendered="#{clienteBean.acao == 'editar'}" />
+
+				<p:button value="Pesquisar" outcome="/paginas/clientesPesquisa.xhtml"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

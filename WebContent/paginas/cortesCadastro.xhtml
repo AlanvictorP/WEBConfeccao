@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template/templateGeral.xhtml">
+	<ui:define name="metaData">
+		<!-- MetaData para recuperar os param e realizar a pesquisa do cliente selecionado -->
+		<f:metadata>
+			<f:viewParam name="corte_cod" value="#{corteBean.codigo}" />
+			<f:viewParam name="corte_acao" value="#{corteBean.acao}" />
+			<f:event listener="#{corteBean.carregarPesquisa}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmCadastroCorte">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastro de Cortes" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="pnlCadastroCorte" columns="2">
+
+				<p:outputLabel value="Cliente:" />
+				<p:selectOneMenu value="#{corteBean.corteCadastro.pessoa}"
+					converter="clientesConversao">
+					<f:selectItem itemValue="" itemLabel="Selecione um Cliente." />
+					<f:selectItems value="#{corteBean.listaClientes}" var="cliente"
+						itemValue="#{cliente}" itemLabel="#{cliente.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Lote:" />
+				<p:inputText maxlength="30" size="15"
+					value="#{corteBean.corteCadastro.lote}"
+					readonly="#{corteBean.acao == 'excluir'}">
+				</p:inputText>
+
+				<p:outputLabel value="Quantidade:" />
+				<p:inputText maxlength="30" size="15"
+					value="#{corteBean.corteCadastro.quantidade}"
+					readonly="#{corteBean.acao == 'excluir'}">
+				</p:inputText>
+
+				<p:outputLabel value="Data de Entrada:" />
+				<p:calendar pattern="dd/MM/yyyy" locale="pt"
+					value="#{corteBean.corteCadastro.dataE}" size="8"
+					disabled="#{corteBean.acao == 'excluir'}">
+				</p:calendar>
+
+
+				<p:outputLabel value="Valor da unidade:" />
+				<p:inputText maxlength="7" size="8"
+					value="#{corteBean.corteCadastro.valorUni}"
+					readonly="#{corteBean.acao == 'excluir'}"
+					converterMessage="Campo preço invalido.">
+					<f:convertNumber />
+				</p:inputText>
+
+				<p:outputLabel value="Data da Saida:" rendered="#{corteBean.acao == 'finalizar'}" />
+				<p:calendar pattern="dd/MM/yyyy" locale="pt"
+					value="#{corteBean.corteCadastro.dataS}" size="8"
+					rendered="#{corteBean.acao == 'finalizar'}">
+				</p:calendar>
+
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="5">
+				<p:commandButton value="Salvar" actionListener="#{corteBean.salvar}"
+					update=":msgGlobal :frmCadastroCorte:pnlCadastroCorte"
+					rendered="#{corteBean.acao == 'novo'}" />
+
+				<p:commandButton value="Limpar" actionListener="#{corteBean.limpar}"
+					update=":frmCadastroCorte:pnlCadastroCorte"
+					rendered="#{corteBean.acao == 'novo'}" />
+
+				<p:commandButton value="Excluir"
+					actionListener="#{corteBean.excluir}" update=":msgGlobal"
+					rendered="#{corteBean.acao == 'excluir'}" />
+
+				<p:commandButton value="Editar" actionListener="#{corteBean.editar}"
+					update=":msgGlobal" rendered="#{corteBean.acao == 'editar'}" />
+
+				<p:commandButton value="Finalizar" actionListener="#{corteBean.finalizar}"
+					update=":msgGlobal" rendered="#{corteBean.acao == 'finalizar'}" />
+
+				<p:button value="Pesquisar" outcome="/paginas/cortesPesquisa.xhtml" />
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

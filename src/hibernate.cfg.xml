@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Configurações da conecxão -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/confeccaoweb</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">015693</property>
+
+        <!-- Pool de conecxão JDBC-->
+        <property name="connection.pool_size">1</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+        <!-- Gerenciamento de sessão -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Desabilita a cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+        <!-- Exibi os comandos SQL -->
+        <property name="show_sql">true</property>
+
+        <!-- Cria as tabelas -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <mapping class="br.com.confeccao.model.Pessoa"/>
+        <mapping class="br.com.confeccao.model.Corte"/>
+        <mapping class="br.com.confeccao.model.Movimentacao"/>
+        <mapping class="br.com.confeccao.model.Estoque"/>
+        <mapping class="br.com.confeccao.model.Funcionario"/>   
+
+    </session-factory>
+
+</hibernate-configuration>

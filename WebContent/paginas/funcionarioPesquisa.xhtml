@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template/templateGeral.xhtml">
+	<ui:define name="metaData">
+		<f:metadata>
+			<f:event listener="#{funcionarioBean.pesquisarClientes}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+
+		<h:form>
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Funcionarios" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				value="#{funcionarioBean.listaFuncionarios}"
+				filteredValue="#{funcionarioBean.listaFuncionariosFilter}" var="funcionario"
+				rows="10" paginator="true">
+				<f:facet name="footer">
+					<p:button value="Novo" outcome="/paginas/funcionarioCadastro.xhtml">
+					<f:param name="fun_acao" value="novo" /> 					
+					</p:button>
+				</f:facet>
+				
+				<p:column headerText="Nome" filterBy="#{funcionario.nome}"
+					sortBy="#{funcionario.nome}">
+					<h:outputText value="#{funcionario.nome}" />
+				</p:column>
+				
+				<p:column headerText="Função">
+					<h:outputText value="#{funcionario.funcao}" />
+				</p:column>
+				
+				<p:column headerText="CPF">
+					<h:outputText value="#{funcionario.cpf}" />
+				</p:column>
+				
+				<p:column headerText="Ações">
+					<p:button value="Exluir" outcome="/paginas/funcionarioCadastro.xhtml">
+						<f:param name="fun_acao" value="excluir" /> 
+						<f:param name="fun_cod" value="#{funcionario.codigo}" />
+					</p:button>
+					<p:button value="Editar" outcome="/paginas/funcionarioCadastro.xhtml">
+						<f:param name="fun_acao" value="editar" /> 
+						<f:param name="fun_cod" value="#{funcionario.codigo}" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
